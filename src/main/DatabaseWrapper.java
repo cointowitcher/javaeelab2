@@ -18,6 +18,7 @@ public class DatabaseWrapper {
         } catch(SQLException exception) {
             exception.printStackTrace();
         } finally {
+            if(connection == null) return;
             try { connection.close(); } catch(SQLException exception) { };
             try { statement.close(); } catch(SQLException exception) { };
         }

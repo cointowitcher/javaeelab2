@@ -36,4 +36,18 @@ public class HelloFacesBean implements Serializable {
 	public String getGreeting(){
 		return HELLO + " "  + audience + "!";
 	}
+
+	public String getSomeou() {
+		if(audience.equals("a")) {
+			return "index";
+		}
+		return "makegreeting";
+	}
+
+	public String gg() {
+		if(audience.equals("a")) {
+			return "index";
+		}
+		return "makegreeting";
+	}
 }

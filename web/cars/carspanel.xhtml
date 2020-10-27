@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:form>
+    <ul>
+        <h:dataTable value="#{carsbean.cars}" var="car">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{car.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                #{car.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Price</f:facet>
+                #{car.price}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> </f:facet>
+                <h:commandButton value="Details" action="#{carsbean.carDetail(car)}"/>
+            </h:column>
+        </h:dataTable>
+        <h:commandButton value="Add car" action="#{carsbean.addCar}"/>
+    </ul>
+</h:form>
+</html>

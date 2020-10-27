@@ -24,4 +24,87 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<display-name>loginpanel</display-name>
+		<from-view-id>/login/loginpanel.xhtml</from-view-id>
+		<!-- Button-Action auf index.xhtml -->
+		<navigation-case>
+			<from-outcome>loginerror</from-outcome>
+			<to-view-id>/login/loginerror.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>authorized</from-outcome>
+			<to-view-id>/navigation/navigationpanel.xhtml</to-view-id>
+		</navigation-case>
+
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>navigation</display-name>
+		<from-view-id>/navigation/navigationpanel.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cars</from-outcome>
+			<to-view-id>/cars/carspanel.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>violations</from-outcome>
+			<to-view-id>/violations/violationspanel.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>protocols</from-outcome>
+			<to-view-id>/protocols/protocolspanel.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!--Cars-->
+	<navigation-rule>
+		<display-name>cars</display-name>
+		<from-view-id>/cars/carspanel.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>details</from-outcome>
+			<to-view-id>/cars/carsdetails.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>details</display-name>
+		<from-view-id>/cars/carsdetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>panel</from-outcome>
+			<to-view-id>/cars/carspanel.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!--Protocol-->
+	<navigation-rule>
+		<display-name>protocols</display-name>
+		<from-view-id>/protocols/protocolspanel.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>details</from-outcome>
+			<to-view-id>/protocols/protocolsdetails.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>details</display-name>
+		<from-view-id>/protocols/protocolsdetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>panel</from-outcome>
+			<to-view-id>/protocols/protocolspanel.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!--Violations-->
+	<navigation-rule>
+		<display-name>violations</display-name>
+		<from-view-id>/violations/violationspanel.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>details</from-outcome>
+			<to-view-id>/violations/violationsdetails.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>details</display-name>
+		<from-view-id>/violations/violationsdetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>panel</from-outcome>
+			<to-view-id>/violations/violationspanel.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 </faces-config>

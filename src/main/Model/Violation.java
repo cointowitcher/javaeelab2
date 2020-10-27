@@ -5,6 +5,14 @@ public class Violation {
     String name;
     Integer fineSum;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFineSum(Integer fineSum) {
+        this.fineSum = fineSum;
+    }
+
     public Violation(Integer id, String name, Integer fineSum) {
         this.id = id;
         this.name = name;

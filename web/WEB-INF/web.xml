@@ -8,7 +8,7 @@
 
 	<welcome-file-list>
 		<!-- wenn kein Dateiname angegeben wird wird nach index.html gesucht -->
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>start</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
