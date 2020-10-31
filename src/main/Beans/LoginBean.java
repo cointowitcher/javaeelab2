@@ -1,13 +1,17 @@
 package main.Beans;
+import main.Services.LoginInterface;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
+import javax.inject.Inject;
 
 @ManagedBean(name="loginbean")
 @SessionScoped
 public class LoginBean {
     private String login = "";
     private String password = "";
+    @Inject
+    private LoginInterface loginProvider;
 
     public String getLogin() {
         return login;
@@ -26,11 +30,11 @@ public class LoginBean {
     }
 
     private Boolean getIsAdmin() {
-        return login.equals("admin") && password.equals("admin");
+        return loginProvider.isAdmin(login, password);
     }
 
     private Boolean getIsUser() {
-        return login.equals("user") && password.equals("user");
+        return loginProvider.isUser(login, password);
     }
 
     public Boolean getIsLogged() {

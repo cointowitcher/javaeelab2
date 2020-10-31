@@ -2,7 +2,6 @@ package main.Servlets;
 
 
 import main.Beans.LoginBean;
-import main.DatabaseWrapper;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;

@@ -59,5 +59,4 @@ public class CarsBean {
         carsDao.delete(selectedCar);
         return "panel";
     }
-
 }
