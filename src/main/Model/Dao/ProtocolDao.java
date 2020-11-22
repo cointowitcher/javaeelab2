@@ -1,36 +1,52 @@
 package main.Model.Dao;
 
 import main.Model.Protocol;
+import main.Model.Violation;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class ProtocolDao extends GenericDao<Protocol> {
+    protected EntityManager em;
 
-    protected ProtocolDao(Connection connection) {
-        super(connection, "Protocol");
+    public ProtocolDao() {
+        EntityManagerFactory ef = Persistence.createEntityManagerFactory("persistenceunit");
+        em = ef.createEntityManager();
+    }
+    @Override
+    public Optional<Protocol> get(int id) {
+        return Optional.of(em.find(Protocol.class, id));
     }
 
-    String getInsertStatement(Protocol protocol) {
-        return "INSERT INTO " + tableName + " (id_car, id_violation)" +
-                "VALUES (" + protocol.getCarId() + ", " + protocol.getViolationId() + ") RETURNING id;";
-    }
-    String getUpdateStatement(Protocol protocol) {
-        return "UPDATE " + tableName + " SET id_car = " + protocol.getCarId()
-                + ", id_violation = " + protocol.getViolationId() + "WHERE id = " + protocol.getId() + ";";
+    @Override
+    public List<Protocol> getAll() {
+        return em.createNamedQuery("Protocol.findAll", Protocol.class).getResultList();
     }
 
-    Protocol getObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        int violationId = resultSet.getInt("id");
-        int idCar = resultSet.getInt("id_car");
-        int idViolation = resultSet.getInt("id_violation");
-        return new Protocol(violationId, idCar, idViolation);
+    @Override
+    public void save(Protocol protocol) {
+        em.getTransaction().begin();
+        em.persist(protocol);
+        em.getTransaction().commit();
     }
 
-    String getDeleteStatement(Protocol protocol) {
-        return "DELETE FROM " + tableName + " WHERE id = " +protocol.getId() + ";";
+    @Override
+    public void update(Protocol protocol) {
+        save(protocol);
+    }
+
+    @Override
+    public void delete(Protocol protocol) {
+        em.getTransaction().begin();
+        em.remove(protocol);
+        em.getTransaction().commit();
     }
 }

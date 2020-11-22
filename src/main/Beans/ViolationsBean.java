@@ -1,12 +1,10 @@
 package main.Beans;
 import main.Model.Violation;
 import main.Model.Dao.ViolationDao;
-import main.Model.Dao.DaoManager;
-import main.Model.Dao.Table;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,7 +13,9 @@ import java.util.List;
 public class ViolationsBean {
     private ViolationDao violationDao;
     private Violation selectedViolation;
-
+    public ViolationsBean() {
+        violationDao = new ViolationDao();
+    }
     public Violation getSelectedViolation() {
         return selectedViolation;
     }
@@ -24,18 +24,9 @@ public class ViolationsBean {
         this.selectedViolation = selectedViolation;
     }
 
-    public ViolationsBean() {
-        try {
-            violationDao = (ViolationDao) DaoManager.shared().getDAO(Table.Violation);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
     public List<Violation> getViolations() {
-        List<Violation> cars = violationDao.getAll();
-        cars.sort(Comparator.comparing(Violation::getId));
-        return cars;
+        List<Violation> violations = violationDao.getAll();
+        return violations;
     }
 
     public String violationDetail(Violation violation) {
@@ -44,7 +35,7 @@ public class ViolationsBean {
     }
 
     public String saveSelectedViolation() {
-        if(selectedViolation.getId() == -1) {
+        if(selectedViolation.getId() == null) {
             violationDao.save(selectedViolation);
         } else {
             violationDao.update(selectedViolation);
@@ -52,7 +43,7 @@ public class ViolationsBean {
         return "panel";
     }
     public String addViolation() {
-        selectedViolation = new Violation(-1, "", 0);
+        selectedViolation = new Violation();
         return "details";
     }
     public String removeViolation() {

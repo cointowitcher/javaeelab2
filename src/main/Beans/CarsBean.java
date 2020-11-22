@@ -1,12 +1,11 @@
 package main.Beans;
 import main.Model.Car;
+import main.Model.CarClass;
 import main.Model.Dao.CarDao;
-import main.Model.Dao.DaoManager;
-import main.Model.Dao.Table;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,6 +15,8 @@ public class CarsBean {
     private CarDao carsDao;
     private Car selectedCar;
 
+    public CarsBean() { carsDao = new CarDao(); }
+
     public Car getSelectedCar() {
         return selectedCar;
     }
@@ -24,17 +25,8 @@ public class CarsBean {
         this.selectedCar = selectedCar;
     }
 
-    public CarsBean() {
-        try {
-            carsDao = (CarDao) DaoManager.shared().getDAO(Table.Car);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
     public List<Car> getCars() {
         List<Car> cars = carsDao.getAll();
-        cars.sort(Comparator.comparing(Car::getId));
         return cars;
     }
 
@@ -44,7 +36,7 @@ public class CarsBean {
     }
 
     public String saveSelectedCar() {
-        if(selectedCar.getId() == -1) {
+        if(selectedCar.getId() == null) {
             carsDao.save(selectedCar);
         } else {
             carsDao.update(selectedCar);
@@ -52,7 +44,7 @@ public class CarsBean {
         return "panel";
     }
     public String addCar() {
-        selectedCar = new Car(-1, "", 0);
+        selectedCar = new Car();
         return "details";
     }
     public String removeCar() {

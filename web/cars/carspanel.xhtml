@@ -21,6 +21,10 @@
                 #{car.price}
             </h:column>
             <h:column>
+                <f:facet name="header">Class</f:facet>
+                #{car.carClass}
+            </h:column>
+            <h:column>
                 <f:facet name="header"> </f:facet>
                 <h:commandButton value="Details" action="#{carsbean.carDetail(car)}"/>
             </h:column>
