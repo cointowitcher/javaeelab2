@@ -11,6 +11,7 @@ import java.util.List;
 @ManagedBean(name="protocolsbean")
 @SessionScoped
 public class ProtocolsBean {
+    @EJB
     private ProtocolDao protocolDao;
     private Protocol selectedProtocol;
 

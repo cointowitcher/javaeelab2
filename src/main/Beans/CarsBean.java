@@ -12,6 +12,7 @@ import java.util.List;
 @ManagedBean(name="carsbean")
 @SessionScoped
 public class CarsBean {
+    @EJB
     private CarDao carsDao;
     private Car selectedCar;
 

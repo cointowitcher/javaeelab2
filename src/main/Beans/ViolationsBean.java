@@ -11,6 +11,7 @@ import java.util.List;
 @ManagedBean(name="violationsbean")
 @SessionScoped
 public class ViolationsBean {
+    @EJB
     private ViolationDao violationDao;
     private Violation selectedViolation;
     public ViolationsBean() {

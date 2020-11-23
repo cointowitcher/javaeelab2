@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class GenericDao<T> {
-
-    protected EntityManager em;
-
     abstract public Optional<T> get(int id);
 
     abstract public List<T> getAll();

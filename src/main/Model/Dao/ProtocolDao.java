@@ -3,6 +3,10 @@ package main.Model.Dao;
 import main.Model.Protocol;
 import main.Model.Violation;
 
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
+import javax.ejb.StatefulTimeout;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -13,14 +17,16 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
+@Stateful
+@StatefulTimeout(value=5, unit= TimeUnit.SECONDS)
 public class ProtocolDao extends GenericDao<Protocol> {
+    private List<Protocol> cache;
+
+    @PersistenceContext(name = "postgrespersistenceq")
     protected EntityManager em;
 
-    public ProtocolDao() {
-        EntityManagerFactory ef = Persistence.createEntityManagerFactory("persistenceunit");
-        em = ef.createEntityManager();
-    }
     @Override
     public Optional<Protocol> get(int id) {
         return Optional.of(em.find(Protocol.class, id));
@@ -28,6 +34,10 @@ public class ProtocolDao extends GenericDao<Protocol> {
 
     @Override
     public List<Protocol> getAll() {
+        if (cache != null) {
+            return cache;
+        }
+        cache = em.createNamedQuery("Protocol.findAll", Protocol.class).getResultList();
         return em.createNamedQuery("Protocol.findAll", Protocol.class).getResultList();
     }
 
@@ -48,5 +58,10 @@ public class ProtocolDao extends GenericDao<Protocol> {
         em.getTransaction().begin();
         em.remove(protocol);
         em.getTransaction().commit();
+    }
+
+    @Remove
+    void remove() {
+        cache = null;
     }
 }

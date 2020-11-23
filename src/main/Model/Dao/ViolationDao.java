@@ -2,6 +2,9 @@ package main.Model.Dao;
 
 import main.Model.Violation;
 
+import javax.ejb.Singleton;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,9 +13,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+@Singleton
 public class ViolationDao extends GenericDao<Violation> {
-
+    @PersistenceContext(name = "postgrespersistenceq")
     protected EntityManager em;
+
+    private String someGlobalString = "info";
 
     public ViolationDao() {
         EntityManagerFactory ef = Persistence.createEntityManagerFactory("persistenceunit");

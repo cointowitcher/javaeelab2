@@ -2,7 +2,9 @@ package main.Model.Dao;
 
 import main.Model.Car;
 import main.Model.Protocol;
+import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.transaction.Transaction;
@@ -17,12 +19,9 @@ import java.util.Optional;
 
 @Stateless
 public class CarDao extends GenericDao<Car> {
-    protected EntityManager em;
+    @PersistenceContext(name = "postgrespersistenceq")
+    public EntityManager em;
 
-    public CarDao() {
-        EntityManagerFactory ef = Persistence.createEntityManagerFactory("persistenceunit");
-        em = ef.createEntityManager();
-    }
     @Override
     public Optional<Car> get(int id) {
         return Optional.of(em.find(Car.class, id));
@@ -54,6 +53,7 @@ public class CarDao extends GenericDao<Car> {
     @Override
     public void update(Car car) {
         save(car);
+        updateDataInDb();
     }
 
     @Override
@@ -61,5 +61,17 @@ public class CarDao extends GenericDao<Car> {
         em.getTransaction().begin();
         em.createQuery("delete from Car c where c.id = " + car.getId()).executeUpdate();
         em.getTransaction().commit();
+    }
+
+    @Asynchronous
+    void updateDataInDb() {
+        try {
+            Thread.sleep(1000);
+            System.out.println("Data in cloud have been updated");
+            // updating data in cloud, retrieving result and depending on the result call other functions
+        } catch(Exception exception) {
+            // Schedule updating database for next iteration or other logic
+            System.out.println("Data in cloud could not be updated");
+        }
     }
 }
